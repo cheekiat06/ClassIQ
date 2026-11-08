@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ClassIQ — clickable demo for BearyFun Gym</title>
+<style>
+:root{--ink:#16302B;--muted:#5E6F72;--teal:#0E7C86;--teal-d:#0A5C64;--teal-l:#E3F3F4;--sun:#F2B705;--sun-l:#FDF3CF;--coral:#D14B3F;--coral-l:#FBE3E0;--green:#2E8B57;--green-l:#E3F3EA;--bg:#F2F6F7;--line:#D9E2E5;--white:#fff}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--ink);background:var(--bg);font-size:14px;line-height:1.45}
+.app{display:grid;grid-template-columns:232px 1fr;min-height:100vh}
+.side{background:var(--ink);color:#DCEBE8;padding:18px 14px;display:flex;flex-direction:column;gap:6px}
+.brand{display:flex;align-items:center;gap:10px;padding:4px 8px 16px}
+.brand .mark{width:34px;height:34px;border-radius:10px;background:var(--teal);display:grid;place-items:center;font-weight:700;color:#fff;font-size:16px}
+.brand b{font-size:17px;letter-spacing:.2px}.brand small{display:block;color:#9FB8B3;font-size:11px}
+.side .lbl{font-size:11px;color:#8FA8A3;padding:12px 8px 4px}
+.nav{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;cursor:pointer;color:#DCEBE8;border:0;background:transparent;text-align:left;width:100%;font:inherit}
+.nav:hover{background:rgba(255,255,255,.07)}.nav.on{background:var(--teal);color:#fff}
+.nav .ic{width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,.14);display:grid;place-items:center;font-size:12px;font-weight:700}
+.nav .cnt{margin-left:auto;background:var(--sun);color:#3B2E00;font-size:11px;font-weight:700;padding:1px 7px;border-radius:10px}
+.side select{width:100%;margin:4px 0 0;background:#223E39;color:#fff;border:1px solid #35554F;border-radius:8px;padding:8px 10px;font:inherit}
+.sync{margin-top:auto;font-size:12px;color:#9FB8B3;padding:10px 8px;border-top:1px solid #2C4842}
+.sync b{color:#8BE0C8}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#8BE0C8;margin-right:6px;box-shadow:0 0 0 3px rgba(139,224,200,.25)}
+.main{padding:22px 28px 60px;max-width:1240px}
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:18px}
+h1{font-size:24px;margin:0;font-weight:700;letter-spacing:-.2px}.sub{color:var(--muted);margin-top:3px}
+h2{font-size:16px;margin:0 0 10px}h3{font-size:14px;margin:0 0 6px}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.tile{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.tile .v{font-size:26px;font-weight:700;letter-spacing:-.5px}.tile .k{color:var(--muted);font-size:12px}.tile .d{font-size:12px;margin-top:4px}
+.card{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.sp{justify-content:space-between}
+.btn{border:1px solid var(--teal);background:var(--teal);color:#fff;border-radius:8px;padding:8px 13px;font:inherit;font-weight:600;cursor:pointer}
+.btn:hover{background:var(--teal-d)}.btn.ghost{background:#fff;color:var(--teal)}.btn.ghost:hover{background:var(--teal-l)}.btn.sm{padding:5px 10px;font-size:12px}.btn.warn{background:var(--coral);border-color:var(--coral)}
+.btn:disabled{opacity:.5;cursor:default}
+.chip{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11.5px;font-weight:600;background:#EEF2F3;color:#3D4F52;white-space:nowrap}
+.chip.teal{background:var(--teal-l);color:var(--teal-d)}.chip.sun{background:var(--sun-l);color:#6B5200}.chip.coral{background:var(--coral-l);color:#8E2B22}.chip.green{background:var(--green-l);color:#1E5F3B}
+.src{font-size:11px;font-weight:700;padding:2px 7px;border-radius:5px;background:#EEF2F3;color:#3D4F52}
+.src.WhatsApp{background:#DDF5E7;color:#166A3B}.src.Meta{background:#E3EAFB;color:#2B4EA8}.src.Google{background:#FDEBD0;color:#8C4A00}.src.Web{background:#EAE4F7;color:#4E3A8F}.src.Email{background:#EEF2F3;color:#3D4F52}
+.tbl{width:100%;border-collapse:collapse}.tbl th{text-align:left;font-size:11.5px;color:var(--muted);font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line)}
+.tbl td{padding:9px 8px;border-bottom:1px solid #EEF2F3;vertical-align:top}.tbl tr:hover td{background:#F7FAFB}.tbl .cl{cursor:pointer}
+.kan{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.col{background:#E9EFF1;border-radius:12px;padding:10px;min-height:260px}.col h4{margin:0 0 8px;font-size:12.5px;color:var(--muted);display:flex;justify-content:space-between}
+.lead{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:8px;cursor:pointer}.lead:hover{border-color:var(--teal)}
+.lead b{display:block}.lead .m{font-size:12px;color:var(--muted);margin-top:4px}.lead .due{font-size:11.5px;color:#8E2B22;margin-top:5px;font-weight:600}
+.drawer{position:fixed;top:0;right:-560px;width:540px;height:100vh;background:#fff;box-shadow:-10px 0 30px rgba(0,0,0,.12);transition:right .25s;padding:22px 24px;overflow:auto;z-index:20}
+.drawer.open{right:0}.x{float:right;border:0;background:#EEF2F3;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:16px}
+.bub{max-width:88%;padding:9px 12px;border-radius:12px;margin:6px 0;font-size:13px}.bub.in{background:#EEF2F3;border-top-left-radius:3px}.bub.out{background:#DDF5E7;margin-left:auto;border-top-right-radius:3px}.bub .t{display:block;font-size:10.5px;color:var(--muted);margin-top:3px}
+.ai{background:var(--sun-l);border:1px dashed #E0B400;border-radius:10px;padding:10px 12px;margin:10px 0}.ai .h{font-size:11.5px;font-weight:700;color:#6B5200;margin-bottom:4px}
+.ctx{background:var(--teal-l);border-radius:10px;padding:10px 12px;font-size:12.5px;margin:10px 0}.ctx b{display:block;color:var(--teal-d);margin-bottom:4px}.ctx span{display:inline-block;margin:2px 10px 2px 0}
+.heat{display:grid;grid-template-columns:70px repeat(6,1fr);gap:6px}.heat .hd{font-size:11.5px;color:var(--muted);text-align:center;padding:4px}
+.heat .tm{font-size:11.5px;color:var(--muted);padding-top:12px}.cell{border-radius:9px;padding:8px;min-height:58px;cursor:pointer;border:1px solid transparent;font-size:12px}
+.cell b{display:block;font-size:12.5px}.cell:hover{border-color:var(--ink)}.cell.lo{background:var(--coral-l)}.cell.md{background:var(--sun-l)}.cell.hi{background:var(--teal-l)}.cell.empty{background:#F4F6F7;color:#B0BCBF;cursor:default}
+.bar{height:8px;background:#EEF2F3;border-radius:4px;overflow:hidden}.bar i{display:block;height:100%;background:var(--teal)}
+.att{display:flex;gap:3px}.att i{width:14px;height:14px;border-radius:3px;background:var(--green)}.att i.no{background:var(--coral)}.att i.mu{background:var(--sun)}
+.opt{border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:10px}.opt.best{border-color:var(--teal);background:#F6FBFB}.opt .rs{color:var(--muted);font-size:12.5px;margin:6px 0}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:11px 16px;border-radius:10px;opacity:0;transition:all .25s;z-index:30;font-weight:600;pointer-events:none}.toast.on{opacity:1;transform:translateX(-50%)}
+textarea,input{font:inherit;width:100%;border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.muted{color:var(--muted)}.sm{font-size:12px}.ok{color:var(--green);font-weight:600}.bad{color:#8E2B22;font-weight:600}
+.legend{display:flex;gap:14px;font-size:12px;color:var(--muted);margin-top:8px}.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.note{font-size:12px;color:var(--muted);background:#F7FAFB;border-left:3px solid var(--teal);padding:8px 10px;border-radius:6px;margin:10px 0}
+.pb{display:flex;gap:6px;margin:6px 0}.pb i{flex:1;height:6px;border-radius:3px;background:#EEF2F3}.pb i.on{background:var(--teal)}
+@media (max-width:980px){.app{grid-template-columns:1fr}.side{flex-direction:row;flex-wrap:wrap}.tiles,.kan,.grid3{grid-template-columns:1fr 1fr}.grid2{grid-template-columns:1fr}.drawer{width:100%;right:-100%}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><div class="mark">C</div><div><b>ClassIQ</b><small>BearyFun Gym · demo</small></div></div>
+    <div class="lbl">Centre</div>
+    <select onchange="setCentre(this.value)"><option>Katong</option><option>Bukit Batok</option><option>Changi</option><option>Choa Chu Kang</option><option>Hougang</option><option>Pasir Ris</option><option>Marine Parade</option></select>
+    <div class="lbl">Workspace</div>
+    <div id="nav"></div>
+    <div class="sync"><span class="dot"></span>Respond.io sync <b>live</b><br><span class="sm">Last webhook 2 min ago · 3 contacts updated</span></div>
+  </aside>
+  <main class="main"><div id="view"></div></main>
+</div>
+<div class="drawer" id="drawer"></div>
+<div class="toast" id="toast"></div>
+<script>
+// ---------- synthetic data (no real BearyFun Gym data is used) ----------
+const PROGS={BearyTots:"18m–3y",Jolly:"3y",Bubbly:"4y",Lively:"5y",Flexi:"6y","Fitness Teen":"7–12y"};
+const S={centre:"Katong",view:"home",sel:null,ren:"idle",
+leads:[
+ {id:1,parent:"Mdm Tan",child:"Elliot",age:"4y 2m",prog:"Bubbly",src:"WhatsApp",stage:"New",msg:"Hi, my son is 4. Do you have weekend classes at Katong and what is the fee?",time:"Sun 21:40",pref:"weekend"},
+ {id:6,parent:"Ms Wong",child:"Mia",age:"8y",prog:"Fitness Teen",src:"Google",stage:"New",msg:"Looking for gymnastics for my 8-year-old who did ballet before. Weekday evenings?",time:"Mon 07:55",pref:"weekday"},
+ {id:2,parent:"Mr Raj",child:"Anaya",age:"2y 8m",prog:"BearyTots",src:"Meta",stage:"Responded",msg:"Lead form: toddler class, weekday mornings preferred",time:"Mon 08:10",pref:"weekday"},
+ {id:7,parent:"Mdm Siti",child:"Aqil",age:"4y 9m",prog:"Bubbly",src:"WhatsApp",stage:"Responded",msg:"Can I know the trial price? Saturday is best for us.",time:"Sun 19:05",pref:"weekend"},
+ {id:3,parent:"Ms Lim",child:"Kai",age:"6y",prog:"Flexi",src:"Web",stage:"Trial booked",trial:"Sat 14 Nov · 10:30",time:"Fri",pref:"weekend"},
+ {id:4,parent:"Mrs Ong",child:"Zara",age:"5y 5m",prog:"Lively",src:"Email",stage:"Trial done",time:"Thu",pref:"weekend",note:"Coach: confident on beam, enjoyed trampoline. Recommend enrol."},
+ {id:5,parent:"Mr Goh",child:"Lucas",age:"3y 1m",prog:"Jolly",src:"WhatsApp",stage:"Enrolled",time:"Wed",pref:"weekday"}],
+classes:[
+ {d:"Tue",t:"10:00",prog:"BearyTots",n:6,coach:"Ayuni"},{d:"Wed",t:"10:00",prog:"BearyTots",n:3,coach:"Ayuni"},
+ {d:"Tue",t:"16:30",prog:"Jolly",n:7,coach:"Marcus"},{d:"Wed",t:"16:30",prog:"Bubbly",n:4,coach:"Marcus"},{d:"Thu",t:"16:30",prog:"Lively",n:8,coach:"Ayuni"},{d:"Fri",t:"16:30",prog:"Flexi",n:5,coach:"Daniel"},
+ {d:"Tue",t:"17:30",prog:"Bubbly",n:3,coach:"Marcus"},{d:"Wed",t:"17:30",prog:"Jolly",n:6,coach:"Marcus"},{d:"Thu",t:"17:30",prog:"Fitness Teen",n:7,coach:"Daniel"},{d:"Fri",t:"17:30",prog:"Lively",n:6,coach:"Daniel"},
+ {d:"Sat",t:"09:30",prog:"BearyTots",n:8,coach:"Ayuni"},{d:"Sun",t:"09:30",prog:"Jolly",n:7,coach:"Ayuni"},
+ {d:"Sat",t:"10:30",prog:"Bubbly",n:5,coach:"Marcus"},{d:"Sun",t:"10:30",prog:"Bubbly",n:8,coach:"Marcus"},
+ {d:"Sat",t:"11:30",prog:"Lively",n:8,coach:"Daniel"},{d:"Sun",t:"11:30",prog:"Flexi",n:6,coach:"Daniel"},
+ {d:"Sat",t:"14:00",prog:"Flexi",n:4,coach:"Daniel"},{d:"Sun",t:"14:00",prog:"Fitness Teen",n:5,coach:"Daniel"},
+ {d:"Sat",t:"15:30",prog:"Jolly",n:2,coach:"Ayuni"},{d:"Sun",t:"15:30",prog:"Lively",n:3,coach:"Marcus"}],
+students:[
+ {id:"S-1042",name:"Lucas Goh",age:"3y 1m",prog:"Jolly",cls:"Tue 16:30",coach:"Marcus",parent:"Mr Goh · +65 9xxx 1123",att:[1,1,1,0,1,1,1,1,0,1],renew:"20 Dec 2026",bal:"S$0.00",since:"Jan 2026",notes:["Nov: good balance on low beam; working on forward roll","Oct: joined group warm-up confidently"],risk:12},
+ {id:"S-0871",name:"Chloe Lim",age:"5y 3m",prog:"Lively",cls:"Thu 16:30",coach:"Ayuni",parent:"Mrs Lim · +65 9xxx 4410",att:[1,0,0,1,0,0,1,0,0,0],renew:"20 Dec 2026",bal:"S$0.00",since:"Apr 2025",notes:["Nov: missed 3 of last 5; parent mentioned school CCA clash"],risk:82},
+ {id:"S-0933",name:"Ethan Koh",age:"6y 8m",prog:"Flexi",cls:"Sat 14:00",coach:"Daniel",parent:"Mr Koh · +65 9xxx 7781",att:[1,1,1,1,1,1,1,1,1,1],renew:"20 Dec 2026",bal:"S$0.00",since:"Aug 2024",notes:["Nov: cartwheel consistent; ready for Fitness Teen next term"],risk:8},
+ {id:"S-1107",name:"Hana Rahman",age:"4y 6m",prog:"Bubbly",cls:"Sat 10:30",coach:"Marcus",parent:"Mdm Rahman · +65 8xxx 2210",att:[1,1,0,1,1,1,0,1,1,1],renew:"20 Dec 2026",bal:"S$195.00 due",since:"Jul 2026",notes:["Nov: enjoys trampoline; shy in group games"],risk:34},
+ {id:"S-0645",name:"Ryan Teo",age:"9y",prog:"Fitness Teen",cls:"Thu 17:30",coach:"Daniel",parent:"Ms Teo · +65 9xxx 9034",att:[1,1,1,1,0,1,1,1,1,1],renew:"20 Dec 2026",bal:"S$0.00",since:"Feb 2023",notes:["Nov: strong tumbling; preparing for display"],risk:15},
+ {id:"S-1150",name:"Amelia Ng",age:"2y 10m",prog:"BearyTots",cls:"Wed 10:00",coach:"Ayuni",parent:"Mrs Ng · +65 9xxx 6611",att:[1,1,1,1,1,1,1,0,1,1],renew:"20 Dec 2026",bal:"S$0.00",since:"Sep 2026",notes:["Nov: settling well; parent asked about moving to Sat"],risk:22}],
+risk:[
+ {name:"Chloe Lim",prog:"Lively · Thu 16:30",score:82,why:["Missed 3 of last 5 classes","Renewal prompt unanswered 6 days","Parent mentioned CCA clash"],act:"Offer Sat 11:30 Lively (2 seats) and a make-up lesson"},
+ {name:"Darren Pang",prog:"Flexi · Fri 16:30",score:71,why:["Attendance down 40% vs last term","No parent reply in 14 days"],act:"Coach Daniel to call; share progress video"},
+ {name:"Sofia Chua",prog:"Bubbly · Wed 16:30",score:64,why:["Feedback: 'class too crowded' (Oct survey)","2 make-ups unused"],act:"Propose Tue 17:30 Bubbly (5 seats)"},
+ {name:"Hana Rahman",prog:"Bubbly · Sat 10:30",score:34,why:["Outstanding balance S$195"],act:"Payment reminder with PayNow QR"},
+ {name:"Amelia Ng",prog:"BearyTots · Wed 10:00",score:22,why:["Parent asked about weekend slot"],act:"Offer Sat 09:30 waitlist; no risk action needed"}],
+renewals:[
+ {f:"Goh (Lucas)",prog:"Jolly",fee:585,r:"Confirmed",ch:"PayNow QR"},{f:"Lim (Chloe)",prog:"Lively",fee:585,r:"No reply",ch:""},{f:"Koh (Ethan)",prog:"Flexi",fee:585,r:"Confirmed",ch:"Card (recurring)"},
+ {f:"Rahman (Hana)",prog:"Bubbly",fee:585,r:"Undecided",ch:""},{f:"Teo (Ryan)",prog:"Fitness Teen",fee:720,r:"Confirmed",ch:"Screenshot"},{f:"Ng (Amelia)",prog:"BearyTots",fee:520,r:"Confirmed",ch:"eGIRO"},
+ {f:"Pang (Darren)",prog:"Flexi",fee:585,r:"Declined",ch:"",why:"Moving house to Punggol"},{f:"Chua (Sofia)",prog:"Bubbly",fee:585,r:"Undecided",ch:""},{f:"Yeo (Isaac)",prog:"Jolly",fee:585,r:"Confirmed",ch:"PayNow QR"},{f:"Mohamed (Zahra)",prog:"Lively",fee:585,r:"Confirmed",ch:"PayNow QR"}],
+library:{Programmes:"Our programmes are grouped by age: BearyTots (18 months–3 years), Jolly (3), Bubbly (4), Lively (5), Flexi (6) and Fitness Teen (7–12). Classes are capped at 8 children so every child gets individual attention.",
+ Trial:"A trial lesson is S$45. If you sign up for the term after the trial, the registration fee is waived and your child receives a BearyFun Gym t-shirt and shorts.",
+ Weekend:"Katong runs weekend classes on Saturday and Sunday from 9:30 am to 7:00 pm. Weekday classes run Tuesday to Friday from 4:30 pm.",
+ Location:"BearyFun Gym Katong is a short walk from the MRT; parking is available in the building. Please arrive 10 minutes early for your first lesson."},
+matched:false};
+
+// ---------- helpers ----------
+const $=id=>document.getElementById(id);
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove("on"),2600)}
+function go(v){S.view=v;S.sel=null;closeDrawer();render()}
+function setCentre(c){S.centre=c;toast("Showing "+c+" (demo data is identical per centre)");render()}
+function closeDrawer(){$("drawer").classList.remove("open")}
+function drawer(html){$("drawer").innerHTML='<button class="x" onclick="closeDrawer()">×</button>'+html;$("drawer").classList.add("open")}
+function occ(n){return n>=6?"hi":n>=4?"md":"lo"}
+function bars(data,max,color){const w=100/data.length;return `<svg viewBox="0 0 100 44" style="width:100%;height:150px">${data.map((d,i)=>`<rect x="${i*w+w*0.18}" y="${40-36*d.v/max}" width="${w*0.64}" height="${36*d.v/max}" rx="1" fill="${color||'#0E7C86'}"/><text x="${i*w+w/2}" y="43.5" font-size="2.6" text-anchor="middle" fill="#5E6F72">${d.l}</text>`).join("")}</svg>`}
+function line(vals,fc){const all=vals.concat(fc);const max=Math.max(...all)*1.1;const n=all.length;const px=i=>4+i*(92/(n-1));const py=v=>40-34*v/max;
+ const p=vals.map((v,i)=>`${px(i)},${py(v)}`).join(" ");const f=fc.map((v,i)=>`${px(vals.length-1+i+1)},${py(v)}`).join(" ");
+ return `<svg viewBox="0 0 100 46" style="width:100%;height:170px"><polyline points="${p}" fill="none" stroke="#0E7C86" stroke-width="1.2"/><polyline points="${px(vals.length-1)},${py(vals[vals.length-1])} ${f}" fill="none" stroke="#F2B705" stroke-width="1.2" stroke-dasharray="2 1.5"/>${["Jan","","Mar","","May","","Jul","","Sep","","Nov","","Jan","","Mar"].map((m,i)=>`<text x="${px(i)}" y="45" font-size="2.6" text-anchor="middle" fill="#5E6F72">${m}</text>`).join("")}</svg>`}
+
+// ---------- views ----------
+const NAV=[["home","Overview","◉"],["leads","Leads & trials","✦"],["students","Students","☺"],["capacity","Classes & capacity","▦"],["risk","Retention Radar","⚑"],["renew","Renewals & payments","$"],["finance","Finance dashboard","▲"],["settings","Answers & rules","⚙"]];
+function nav(){$("nav").innerHTML=NAV.map(([k,l,i])=>`<button class="nav ${S.view===k?'on':''}" onclick="go('${k}')"><span class="ic">${i}</span>${l}${k==='leads'?`<span class="cnt">${S.leads.filter(x=>x.stage==='New'||x.stage==='Responded').length}</span>`:k==='risk'?`<span class="cnt">${S.risk.filter(r=>r.score>=60).length}</span>`:''}</button>`).join("")}
+
+function home(){const nl=S.leads.filter(x=>x.stage==="New").length,tr=S.leads.filter(x=>x.stage==="Trial booked").length,hr=S.risk.filter(r=>r.score>=60).length;
+ const util=Math.round(100*S.classes.reduce((a,c)=>a+c.n,0)/(S.classes.length*8));
+ return `<div class="top"><div><h1>Good morning, Sarah</h1><div class="sub">${S.centre} · Monday 9 Nov 2026 · everything below is synthetic demo data</div></div><button class="btn ghost" onclick="go('leads')">Open today's queue</button></div>
+ <div class="tiles"><div class="tile"><div class="k">Enquiries awaiting a human</div><div class="v">${nl}</div><div class="d">${S.leads.filter(x=>x.stage==='New'||x.stage==='Responded').length} active leads · AI replied to 4 overnight</div></div>
+ <div class="tile"><div class="k">Trials this week</div><div class="v">${tr+3}</div><div class="d">Reminders scheduled automatically</div></div>
+ <div class="tile"><div class="k">Families at risk</div><div class="v" style="color:#8E2B22">${hr}</div><div class="d">Weekly Retention Radar ready</div></div>
+ <div class="tile"><div class="k">Class utilisation</div><div class="v">${util}%</div><div class="d">${S.classes.filter(c=>c.n<4).length} classes under 50%</div></div></div>
+ <div class="grid2"><div class="card"><h2>Needs you today</h2><table class="tbl"><tr><th>Item</th><th>Why</th><th></th></tr>
+ <tr><td>Reply to Mdm Tan (Elliot, 4y)</td><td>Student-specific question routed from Respond.io</td><td><button class="btn sm" onclick="go('leads');openLead(1)">Open</button></td></tr>
+ <tr><td>Propose trial slot · Mdm Siti</td><td>Replied 'Saturday is best' 14 h ago</td><td><button class="btn sm" onclick="go('leads');openLead(7)">Open</button></td></tr>
+ <tr><td>Chloe Lim · at-risk 82</td><td>Missed 3 of 5, renewal unanswered</td><td><button class="btn sm" onclick="go('risk')">Open</button></td></tr>
+ <tr><td>Sat 15:30 Jolly · 2 of 8</td><td>Merge recommended before next term</td><td><button class="btn sm" onclick="go('capacity')">Open</button></td></tr></table></div>
+ <div class="card"><h2>How the inbox and ClassIQ stay in step</h2><p class="sm muted">Respond.io remains the conversation inbox. ClassIQ pushes student context into every contact and pulls each message back into the student record.</p>
+ <div class="ctx"><b>Context ClassIQ writes to the Respond.io contact</b><span>Child: Lucas Goh</span><span>Programme: Jolly · Tue 16:30</span><span>Coach: Marcus</span><span>Renewal: 20 Dec</span><span>Attendance: 8/10</span><span>Risk: low</span></div>
+ <div class="pb"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div><div class="sm muted">Webhooks: new contact → lead · message → timeline · tag 'renew-yes' → invoice · conversation closed → follow-up timer</div></div></div>`}
+
+function leads(){const cols=["New","Responded","Trial booked","Trial done","Enrolled"];
+ return `<div class="top"><div><h1>Leads & trials</h1><div class="sub">One pipeline for WhatsApp, Meta, Google, web form and email · ${S.centre}</div></div><button class="btn" onclick="simulateLead()">Simulate a new WhatsApp enquiry</button></div>
+ <div class="kan">${cols.map(c=>`<div class="col"><h4>${c}<span>${S.leads.filter(l=>l.stage===c).length}</span></h4>${S.leads.filter(l=>l.stage===c).map(l=>`<div class="lead" onclick="openLead(${l.id})"><span class="src ${l.src}">${l.src}</span> <span class="sm muted">${l.time}</span><b>${l.child}, ${l.age} · ${l.prog}</b><div class="m">${l.parent}${l.trial?' · trial '+l.trial:''}</div>${c==='New'?'<div class="due">Reply due in 1 h</div>':c==='Responded'?'<div class="due">Propose a trial slot</div>':c==='Trial done'?'<div class="due">Send enrolment offer</div>':''}</div>`).join("")}</div>`).join("")}</div>
+ <div class="note">Click any card. New enquiries show the AI's draft from the pre-approved answers; 'Responded' cards show recommended trial slots with reasons.</div>`}
+function simulateLead(){const id=100+Math.floor(Math.random()*900);S.leads.unshift({id,parent:"Mr Lee",child:"Noah",age:"5y 1m",prog:"Lively",src:"WhatsApp",stage:"New",msg:"Hello, is there a class for a 5 year old on Sunday mornings?",time:"just now",pref:"weekend"});render();toast("New WhatsApp enquiry received via Respond.io webhook");openLead(id)}
+function slotsFor(l){return S.classes.filter(c=>c.prog===l.prog&&c.n<8).map(c=>{let s=(8-c.n)*2;const we=["Sat","Sun"].includes(c.d);if((l.pref==="weekend")===we)s+=5;return{...c,s,why:[`${l.age} fits the ${l.prog} band (${PROGS[l.prog]})`,`${8-c.n} seat${8-c.n>1?'s':''} left of 8`,`Coach ${c.coach} is ${l.prog}-certified`,((l.pref==="weekend")===we)?`Matches the family's ${l.pref} preference`:`Outside the stated ${l.pref} preference`]}}).sort((a,b)=>b.s-a.s).slice(0,3)}
+function openLead(id){const l=S.leads.find(x=>x.id===id);S.sel=id;let body="";
+ if(l.stage==="New"){const topics=/fee|price|cost/i.test(l.msg)?["Programmes","Trial"]:/weekend|weekday|evening|morning/i.test(l.msg)?["Programmes","Weekend"]:["Programmes","Trial"];
+  body=`<div class="bub in">${l.msg}<span class="t">${l.parent} · ${l.src} · ${l.time}</span></div>
+  <div class="ai"><div class="h">AI draft · built only from pre-approved answers: ${topics.join(" + ")}</div>${topics.map(t=>S.library[t]).join(" ")} Could you share ${l.child}'s date of birth and whether weekday or weekend suits you? I can then offer a trial slot.</div>
+  <div class="row"><button class="btn" onclick="sendDraft(${l.id})">Send via Respond.io</button><button class="btn ghost" onclick="toast('Opened in Respond.io for editing')">Edit first</button></div>
+  <div class="note">Questions about a specific child (progress, make-ups, injuries) are never auto-answered — they are routed to you with a draft from the Student 360 record.</div>`}
+ else if(l.stage==="Responded"){const sl=slotsFor(l);body=`<div class="bub in">${l.msg}<span class="t">${l.parent} · ${l.time}</span></div><div class="bub out">Thanks! ${l.child} fits our ${l.prog} programme. Let me find you a trial slot.<span class="t">Sent from pre-approved answers</span></div>
+  <h3 style="margin-top:14px">Recommended trial slots</h3>${sl.map((c,i)=>`<div class="opt ${i===0?'best':''}"><div class="row sp"><b>${c.d} ${c.t} · ${c.prog} · Coach ${c.coach}</b><span class="chip ${i===0?'teal':''}">${i===0?'best fit':'alternative'}</span></div><div class="rs">${c.why.join(" · ")}</div><button class="btn sm" onclick="confirmSlot(${l.id},'${c.d} ${c.t}')">Confirm this slot</button></div>`).join("")}<div class="note">Solver rules: age band, programme level, cap of 8, coach certification, centre; soft preferences: stated days, siblings together, coach continuity. You can override any of them.</div>`}
+ else if(l.stage==="Trial booked"){body=`<p><b>Trial booked:</b> ${l.trial} · confirmation and a reminder the day before are sent through Respond.io.</p><div class="bub out">Hi ${l.parent}, ${l.child}'s trial is confirmed for ${l.trial} at BearyFun Gym ${S.centre}. Please arrive 10 minutes early.<span class="t">Template · sent</span></div><button class="btn ghost" onclick="toast('Reminder rescheduled')">Change reminder</button>`}
+ else if(l.stage==="Trial done"){body=`<p><b>Coach observation:</b> ${l.note}</p><div class="ai"><div class="h">AI draft · enrolment offer</div>Hi ${l.parent}, ${l.child} did really well in the trial — ${l.note.split(': ')[1]} We have a seat in Lively on Thursday 16:30 or Saturday 11:30. Shall I reserve one for next term?</div><button class="btn" onclick="enrol(${l.id})">Send offer & reserve seat</button>`}
+ else body=`<p class="ok">Enrolled · Student 360 record created.</p><button class="btn ghost" onclick="go('students')">Open student record</button>`;
+ drawer(`<span class="src ${l.src}">${l.src}</span> <span class="chip">${l.stage}</span><h2 style="margin:8px 0 2px">${l.child} · ${l.age} · ${l.prog}</h2><div class="muted sm">${l.parent} · ${S.centre} · preference: ${l.pref}</div><hr style="border:0;border-top:1px solid var(--line);margin:12px 0">${body}`)}
+function sendDraft(id){const l=S.leads.find(x=>x.id===id);l.stage="Responded";l.time="now";render();toast("Reply sent via Respond.io · lead moved to Responded");openLead(id)}
+function confirmSlot(id,slot){const l=S.leads.find(x=>x.id===id);l.stage="Trial booked";l.trial=slot;const c=S.classes.find(k=>slot===k.d+" "+k.t);if(c)c.n++;render();toast("Trial confirmed · confirmation sent, reminder scheduled");openLead(id)}
+function enrol(id){const l=S.leads.find(x=>x.id===id);l.stage="Enrolled";render();toast("Offer sent · seat reserved · Student 360 record created");openLead(id)}
+
+function students(){return `<div class="top"><div><h1>Students</h1><div class="sub">One record per child from first enquiry to renewal · history kept for former students</div></div><input style="width:260px" placeholder="Search name, parent, phone…"></div>
+ <div class="card"><table class="tbl"><tr><th>Student</th><th>Programme · class</th><th>Coach</th><th>Attendance (last 10)</th><th>Renewal</th><th>Account</th><th>Risk</th></tr>${S.students.map(s=>`<tr class="cl" onclick="openStudent('${s.id}')"><td><b>${s.name}</b><div class="sm muted">${s.id} · ${s.age}</div></td><td>${s.prog}<div class="sm muted">${s.cls}</div></td><td>${s.coach}</td><td><div class="att">${s.att.map(a=>`<i class="${a?'':'no'}"></i>`).join("")}</div></td><td>${s.renew}</td><td class="${s.bal!=='S$0.00'?'bad':''}">${s.bal}</td><td><span class="chip ${s.risk>=60?'coral':s.risk>=30?'sun':'green'}">${s.risk}</span></td></tr>`).join("")}</table></div>`}
+function openStudent(id){const s=S.students.find(x=>x.id===id);drawer(`<span class="chip teal">${s.prog}</span> <span class="chip">${s.id}</span><h2 style="margin:8px 0 2px">${s.name} · ${s.age}</h2><div class="muted sm">${s.parent} · enrolled since ${s.since}</div>
+ <div class="grid2" style="margin-top:12px"><div class="card"><h3>Class</h3>${s.cls} · Coach ${s.coach}<div class="sm muted">Make-ups available: 2</div></div><div class="card"><h3>Account</h3>${s.bal}<div class="sm muted">Renewal ${s.renew}</div></div></div>
+ <div class="card"><h3>Attendance</h3><div class="att">${s.att.map(a=>`<i class="${a?'':'no'}"></i>`).join("")}</div><div class="sm muted" style="margin-top:6px">${s.att.filter(Boolean).length} of 10 attended</div></div>
+ <div class="card"><h3>Coach observations</h3>${s.notes.map(n=>`<div class="sm">• ${n}</div>`).join("")}<div class="ai"><div class="h">AI draft · parent progress update (coach approves before sending)</div>Hi ${s.parent.split(' ·')[0]}, a quick update on ${s.name.split(' ')[0]}: ${s.notes[0].split(': ')[1]}. We're proud of the progress!</div><button class="btn sm" onclick="toast('Progress update approved and sent via Respond.io')">Approve & send</button></div>
+ <div class="card"><h3>Consents (PDPA)</h3><div class="sm">Parent consent on file: enrolment ✓ · progress updates ✓ · photos ✓ · marketing ✗</div></div>`)}
+
+function capacity(){const days=["Tue","Wed","Thu","Fri","Sat","Sun"],times=["10:00","16:30","17:30","09:30","10:30","11:30","14:00","15:30"];
+ const util=Math.round(100*S.classes.reduce((a,c)=>a+c.n,0)/(S.classes.length*8));
+ return `<div class="top"><div><h1>Classes & capacity</h1><div class="sub">${S.centre} · ${S.classes.length} classes · ${util}% of seats filled · cap 8 per class</div></div><button class="btn ghost" onclick="toast('Standard scheduling rules apply; centre overrides are set in Answers & rules')">Scheduling rules</button></div>
+ <div class="card"><div class="heat"><div></div>${days.map(d=>`<div class="hd">${d}</div>`).join("")}${times.map(t=>`<div class="tm">${t}</div>`+days.map(d=>{const c=S.classes.find(k=>k.d===d&&k.t===t);return c?`<div class="cell ${occ(c.n)}" onclick="simulate('${d}','${t}')"><b>${c.prog}</b>${c.n} of 8 · ${c.coach}</div>`:`<div class="cell empty">—</div>`}).join("")).join("")}</div>
+ <div class="legend"><span><i style="background:var(--coral-l)"></i>under 50% — merge or move suggested</span><span><i style="background:var(--sun-l)"></i>50–74%</span><span><i style="background:var(--teal-l)"></i>75%+ · full classes feed the waitlist</span></div></div>
+ <div class="note">Click a class under 50% to open the consolidation simulator. Click a full class to see its waitlist.</div>`}
+function simulate(d,t){const c=S.classes.find(k=>k.d===d&&k.t===t);if(c.n>=8){drawer(`<h2>${d} ${t} · ${c.prog}</h2><p>Full (8 of 8). Waitlist: 3 families. Nearest alternative with seats: ${S.classes.filter(k=>k.prog===c.prog&&k.n<8).map(k=>k.d+' '+k.t+' ('+(8-k.n)+' seats)').join(', ')||'none'}.</p><button class="btn" onclick="toast('Waitlist offers drafted for 3 families via Respond.io')">Offer alternatives to waitlist</button>`);return}
+ const opts=S.classes.filter(k=>k.prog===c.prog&&!(k.d===d&&k.t===t)&&k.n+c.n<=8).map(k=>({...k,after:k.n+c.n,same:(["Sat","Sun"].includes(k.d))===(["Sat","Sun"].includes(d))})).sort((a,b)=>(b.same-a.same)||(b.after-a.after));
+ drawer(`<span class="chip coral">${c.n} of 8 · ${Math.round(c.n/8*100)}% filled</span><h2 style="margin:8px 0 2px">${d} ${t} · ${c.prog} · Coach ${c.coach}</h2><div class="muted sm">Consolidation simulator — nothing changes until you apply an option</div>
+ ${opts.length?opts.map((o,i)=>`<div class="opt ${i===0?'best':''}"><div class="row sp"><b>Merge into ${o.d} ${o.t} · ${o.prog}</b><span class="chip ${i===0?'teal':''}">${o.after} of 8 after merge</span></div><div class="rs">${c.n} famil${c.n>1?'ies':'y'} affected · ${o.same?'same weekday/weekend pattern':'different day pattern — expect more declines'} · Coach ${o.coach} available · frees Coach ${c.coach} for ${d} ${t}</div><button class="btn sm" onclick="applyMerge('${d}','${t}','${o.d}','${o.t}')">Apply & draft parent messages</button></div>`).join(""):'<p>No merge option within capacity. Consider moving the class to a different time.</p>'}
+ <div class="opt"><b>Dissolve and refund</b><div class="rs">Last resort: ${c.n} refunds pro-rated; parents offered waitlist at nearby centres.</div></div>`)}
+function applyMerge(d,t,d2,t2){const a=S.classes.find(k=>k.d===d&&k.t===t),b=S.classes.find(k=>k.d===d2&&k.t===t2);b.n+=a.n;const moved=a.n;S.classes.splice(S.classes.indexOf(a),1);render();closeDrawer();toast(`Merged · ${moved} parent messages drafted in Respond.io for your approval · audit log updated`)}
+
+function risk(){return `<div class="top"><div><h1>Retention Radar</h1><div class="sub">Weekly at-risk list with reasons and a suggested next step · scored from BFG's own renewal history</div></div><button class="btn ghost" onclick="toast('Report emailed to centre managers')">Email weekly report</button></div>
+ <div class="card"><table class="tbl"><tr><th>Family</th><th>Class</th><th>Risk</th><th>Why</th><th>Suggested action</th><th></th></tr>${S.risk.map((r,i)=>`<tr><td><b>${r.name}</b></td><td>${r.prog}</td><td><div class="bar" style="width:90px"><i style="width:${r.score}%;background:${r.score>=60?'var(--coral)':r.score>=30?'var(--sun)':'var(--green)'}"></i></div><span class="sm">${r.score}</span></td><td>${r.why.map(w=>`<span class="chip ${r.score>=60?'coral':'sun'}" style="margin:2px 2px 2px 0">${w}</span>`).join("")}</td><td class="sm">${r.act}</td><td><button class="btn sm" onclick="openRisk(${i})">Reach out</button></td></tr>`).join("")}</table></div>
+ <div class="note">Signals: attendance trend, missed classes, make-up usage, renewal response lag, parent reply latency, survey feedback. Every outreach outcome is recorded so the model recalibrates on what actually kept families.</div>`}
+function openRisk(i){const r=S.risk[i];drawer(`<span class="chip coral">risk ${r.score}</span><h2 style="margin:8px 0 2px">${r.name}</h2><div class="muted sm">${r.prog}</div>
+ <div class="ctx"><b>What the manager sees inside Respond.io</b><span>Risk: ${r.score}</span>${r.why.map(w=>`<span>• ${w}</span>`).join("")}<span>Suggested: ${r.act}</span></div>
+ <div class="bub in">Sorry, Chloe has been tired after school lately.<span class="t">Mrs Lim · Tue</span></div>
+ <div class="ai"><div class="h">AI draft · personal outreach (you approve before sending)</div>Hi Mrs Lim, Coach Ayuni noticed Chloe has missed a few Thursday sessions. If weekday afternoons are tough now, we have 2 seats in Lively on Saturday 11:30 with the same coach, and Chloe can take a make-up lesson this week at no charge. Would that help?</div>
+ <div class="row"><button class="btn" onclick="resolveRisk(${i})">Send & log outreach</button><button class="btn ghost" onclick="toast('Assigned to Coach Ayuni to call')">Ask coach to call</button></div>`)}
+function resolveRisk(i){S.risk[i].score=Math.max(10,S.risk[i].score-45);S.risk[i].why=["Outreach sent; awaiting reply"];S.risk[i].act="Follow up in 3 days";render();closeDrawer();toast("Outreach sent via Respond.io · outcome will be logged against the student")}
+
+function renew(){const st=S.ren;const R=S.renewals;const conf=R.filter(r=>r.r==="Confirmed"),und=R.filter(r=>r.r==="Undecided"),dec=R.filter(r=>r.r==="Declined"),nr=R.filter(r=>r.r==="No reply");
+ const counts=st==="idle"?`<p>10 families due for renewal on 20 Dec. No prompts sent yet.</p><button class="btn" onclick="S.ren='sent';render();toast('Renewal prompts sent via Respond.io template')">Send renewal prompts (WhatsApp)</button>`:
+ `<div class="tiles" style="grid-template-columns:repeat(4,1fr)"><div class="tile"><div class="k">Confirmed → invoiced</div><div class="v" style="color:var(--green)">${conf.length}</div></div><div class="tile"><div class="k">Undecided → manager follow-up</div><div class="v" style="color:#6B5200">${und.length}</div></div><div class="tile"><div class="k">Declined (reason captured)</div><div class="v" style="color:#8E2B22">${dec.length}</div></div><div class="tile"><div class="k">No reply → reminder in 3 days</div><div class="v">${nr.length}</div></div></div>
+ <table class="tbl"><tr><th>Family</th><th>Programme</th><th>Term fee</th><th>Response</th><th>Invoice</th><th>Payment</th></tr>${R.map(r=>`<tr><td><b>${r.f}</b></td><td>${r.prog}</td><td>S$${r.fee}.00</td><td><span class="chip ${r.r==='Confirmed'?'green':r.r==='Undecided'?'sun':r.r==='Declined'?'coral':''}">${r.r}</span>${r.why?`<div class="sm muted">${r.why}</div>`:''}</td><td>${r.r==='Confirmed'?'Issued · PayNow QR':'<span class="muted">not issued</span>'}</td><td>${r.r!=='Confirmed'?'—':r.ch==='Screenshot'?(S.matched?'<span class="ok">Matched (confirmed)</span>':'<span class="bad">Screenshot received — review</span>'):`<span class="ok">Matched · ${r.ch}</span>`}</td></tr>`).join("")}</table>
+ <div class="note">Old flow: 10 invoices raised up-front, 4 later voided. New flow: ${conf.length} invoices raised, 0 voided — intent first, invoice second.</div>`;
+ return `<div class="top"><div><h1>Renewals & payments</h1><div class="sub">Term 1 2027 · intent-first renewals, invoices only for confirmed families, payments matched automatically</div></div></div>
+ <div class="card"><h2>Renewal campaign</h2>${counts}</div>
+ ${st!=="idle"&&!S.matched?`<div class="card"><h2>Payment proof sent over WhatsApp</h2><div class="grid2"><div class="bub in">[image: bank transfer screenshot]<span class="t">Ms Teo · Sun 20:12</span></div><div class="ai"><div class="h">AI extraction · confidence shown per field</div><table class="tbl"><tr><td>Payee</td><td>BEARYFUN GYM PTE LTD</td><td class="ok">0.98</td></tr><tr><td>Amount</td><td>S$720.00</td><td class="ok">0.97</td></tr><tr><td>Date</td><td>8 Nov 2026</td><td class="ok">0.95</td></tr><tr><td>Reference</td><td>INV-2027-0115</td><td style="color:#6B5200;font-weight:600">0.71</td></tr></table><div class="sm" style="margin-top:6px">Proposed match: Teo (Ryan) · Fitness Teen · S$720.00 · invoice INV-2027-0115</div></div></div><div class="row"><button class="btn" onclick="S.matched=true;render();toast('Payment matched · receipt sent · ledger updated')">Confirm match</button><button class="btn ghost" onclick="toast('Flagged to finance for manual review')">Not a match</button></div></div>`:''}`}
+
+function finance(){const rev=[{l:"BBatok",v:62},{l:"Changi",v:58},{l:"Katong",v:71},{l:"CCK",v:66},{l:"Hougang",v:49},{l:"PRis",v:44},{l:"MParade",v:38}];
+ const rr=[{l:"BBatok",v:84},{l:"Changi",v:79},{l:"Katong",v:88},{l:"CCK",v:81},{l:"Hougang",v:72},{l:"PRis",v:69},{l:"MParade",v:0}];
+ return `<div class="top"><div><h1>Finance dashboard</h1><div class="sub">All centres · reconciled to the payment ledger · synthetic figures</div></div><button class="btn ghost" onclick="toast('Export sent to Xero')">Export to accounting</button></div>
+ <div class="tiles"><div class="tile"><div class="k">Term revenue (invoiced)</div><div class="v">S$388k</div><div class="d ok">+6% vs last term</div></div><div class="tile"><div class="k">Collected</div><div class="v">92%</div><div class="d">S$31k outstanding · 54 invoices</div></div><div class="tile"><div class="k">Renewal rate</div><div class="v">81%</div><div class="d ok">+4 pts vs last term</div></div><div class="tile"><div class="k">Forecast next term</div><div class="v">S$402k</div><div class="d">Indicative · seasonality model</div></div></div>
+ <div class="grid2"><div class="card"><h2>Revenue by centre (S$k, this term)</h2>${bars(rev,80)}</div><div class="card"><h2>Renewal rate by centre (%)</h2>${bars(rr,100,"#2E8B57")}<div class="sm muted">Marine Parade opened Dec 2025 — first renewal cycle pending</div></div></div>
+ <div class="card"><h2>Enquiries per month, all sources — with indicative forecast</h2>${line([310,280,420,330,350,470,380,340,450,360,390,520],[430,400,560])}<div class="legend"><span><i style="background:#0E7C86"></i>actual</span><span><i style="background:#F2B705"></i>forecast</span><span>Peaks fall in the two weeks before each school holiday — plan trial slots and ad spend ahead of them</span></div></div>`}
+
+function settings(){return `<div class="top"><div><h1>Answers & rules</h1><div class="sub">Staff maintain the pre-approved answers and scheduling rules — no developer needed</div></div></div>
+ <div class="grid2"><div class="card"><h2>Pre-approved answers (used by the AI first response)</h2>${Object.entries(S.library).map(([k,v])=>`<h3>${k}</h3><textarea rows="3" onchange="S.library['${k}']=this.value;toast('Answer updated · effective immediately')">${v}</textarea>`).join("")}</div>
+ <div class="card"><h2>Scheduling rules</h2><table class="tbl"><tr><td>Class cap</td><td>8 children</td><td><span class="chip teal">all centres</span></td></tr><tr><td>Age bands</td><td>BearyTots 18m–3y · Jolly 3y · Bubbly 4y · Lively 5y · Flexi 6y · Fitness Teen 7–12y</td><td><span class="chip teal">standard</span></td></tr><tr><td>Coach ratio</td><td>1 coach per class; Fitness Teen requires tumbling certification</td><td><span class="chip teal">standard</span></td></tr><tr><td>Merge trigger</td><td>Below 50% for 3 consecutive weeks</td><td><span class="chip sun">${S.centre} override: 2 weeks</span></td></tr><tr><td>Make-up window</td><td>Within the same term, max 2</td><td><span class="chip teal">standard</span></td></tr></table>
+ <h2 style="margin-top:16px">Roles</h2><div class="sm">HQ (all centres) · Centre manager (own centre) · Coach (own classes, mobile) · Finance (payments, dashboards). Every edit, approval and override is written to the audit log.</div></div></div>`}
+
+function render(){nav();const V={home,leads,students,capacity,risk,renew,finance,settings};$("view").innerHTML=V[S.view]();window.scrollTo(0,0)}
+render();
+</script>
+</body>
+</html>
